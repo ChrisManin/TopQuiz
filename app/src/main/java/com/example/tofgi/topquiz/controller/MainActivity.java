@@ -1,6 +1,7 @@
 package com.example.tofgi.topquiz.controller;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,13 +24,10 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int GAME_ACTIVITY_REQUEST_CODE = 2;
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (GAME_ACTIVITY_REQUEST_CODE == requestCode && RESULT_OK == resultCode){
-            int score = data.getIntExtra(GameActivity.BUNDLE_EXTRA_SCORE, 0);
-        }
-    }
+    private SharedPreferences mpreferences;
+
+    public static final String PREF_KEY_FIRSTNAME = "PREF_KEY_FIRSTNAME";
+    public static final String PREF_KEY_SCORE = "PREF_KEY_SCORE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         mGreetingText = (TextView) findViewById(R.id.activity_main_greeting_txt);
         mNameInput = (EditText) findViewById(R.id.activity_main_name_input);
         mPlayButton = (Button) findViewById(R.id.activity_main_play_btn);
+
+        mpreferences = getPreferences(MODE_PRIVATE);
 
         mPlayButton.setEnabled(false);
 
@@ -65,9 +65,34 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String firstname = mNameInput.getText().toString();
                 mUser.setFirstName(firstname);
+                mpreferences.edit().putString(PREF_KEY_FIRSTNAME, mUser.getFirstName()).apply();
                 Intent gameActivity = new Intent(MainActivity.this, GameActivity.class);
                 startActivityForResult(gameActivity, GAME_ACTIVITY_REQUEST_CODE);
             }
         });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (GAME_ACTIVITY_REQUEST_CODE == requestCode && RESULT_OK == resultCode){
+            int score = data.getIntExtra(GameActivity.BUNDLE_EXTRA_SCORE, 0);
+            mpreferences.edit().putInt(PREF_KEY_SCORE, score).apply();
+            greetUser();
+        }
+    }
+
+    private void greetUser() {
+        String firstname = mpreferences.getString(PREF_KEY_FIRSTNAME, null);
+        if(firstname != null){
+            int score = mpreferences.getInt(PREF_KEY_SCORE, 0);
+
+            String fulltext = "Bienvenue, " + firstname + "!\nTon dernier score était de " + score + " points. Feras-tu mieux cette fois ?";
+            mGreetingText.setText(fulltext);
+            mNameInput.setText(firstname);
+            mNameInput.setSelection(firstname.length());
+            mPlayButton.setEnabled(true);
+        }
     }
 }

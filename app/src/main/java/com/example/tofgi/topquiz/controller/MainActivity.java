@@ -35,13 +35,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mUser = new User();
+
+        mpreferences = getPreferences(MODE_PRIVATE);
+
         mGreetingText = (TextView) findViewById(R.id.activity_main_greeting_txt);
         mNameInput = (EditText) findViewById(R.id.activity_main_name_input);
         mPlayButton = (Button) findViewById(R.id.activity_main_play_btn);
 
-        mpreferences = getPreferences(MODE_PRIVATE);
-
         mPlayButton.setEnabled(false);
+
+        greetUser();
 
         mNameInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -94,5 +97,30 @@ public class MainActivity extends AppCompatActivity {
             mNameInput.setSelection(firstname.length());
             mPlayButton.setEnabled(true);
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

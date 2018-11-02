@@ -25,14 +25,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private Button button3;
     private Button button4;
 
-    private int nbrQuestions;
-
     private QuestionBank mQuestionBank;
     private Question mCurrentQuestion;
 
+    private int nbrQuestions;
     private int score;
 
     public static final String BUNDLE_EXTRA_SCORE = "BUNDLE_EXTRA_SCORE";
+    public static final String BUNDLE_STATE_SCORE = "currentScore";
+    public static final String BUNDLE_STATE_QUESTION = "currentQuestion";
 
     private boolean mEnabledTouchEvents;
 
@@ -43,9 +44,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         mQuestionBank = this.generateQuestions();
 
-        nbrQuestions = 8;
-
-        score = 0;
+        if (savedInstanceState != null){
+            score = savedInstanceState.getInt(BUNDLE_STATE_SCORE);
+            nbrQuestions = savedInstanceState.getInt(BUNDLE_STATE_QUESTION);
+        }else{
+            score = 0;
+            nbrQuestions = 10;
+        }
 
         mEnabledTouchEvents = true;
 
@@ -70,8 +75,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(BUNDLE_STATE_SCORE, score);
+        outState.putInt(BUNDLE_STATE_QUESTION, nbrQuestions);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public void onClick(View v) {
         int reponseIndex = (int) v.getTag();
+
         if (reponseIndex == mCurrentQuestion.getAnswerIndex()) {
             score++;
             Toast.makeText(this, "Correct !", Toast.LENGTH_SHORT).show();
@@ -113,6 +126,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         finish();
                     }
                 })
+                .setCancelable(false)
                 .create()
                 .show();
     }
@@ -206,6 +220,86 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 Arrays.asList("Sean Connery", "Piers Brosnan", "Roger Moore", "Burt Reynolds" ),
                 3);
 
+        Question question21 = new Question("Suite à une décision de ses éditeurs, quel héros, dont les aventures débutèrent en 1938, est mort en 1992 dans les bras de sa bien-aimée ?",
+                Arrays.asList("Spiderman", "Flash", "Superman", "Captain America"),
+                2);
+
+        Question question22 = new Question("Dans quelle aventure Tintin voit-il un Yeti ?",
+                Arrays.asList("Tintin au pays des Soviets", "Tintin au Tibet", "Le Lotus Bleu", "Le crabe aux pince d'or"),
+                1);
+
+        Question question23 = new Question("William et Averell sont deux des quatre frères Dalton. Le prénom de chacun des deux autres commence par la lettre « J ». Quels sont leurs prénoms ?",
+                Arrays.asList("Joe et Jack", "Joe et John",  "John et Jack", "Joe et Jim"),
+                0);
+
+        Question question24 = new Question("Sur la page couverture de quel album Tintin est-il sur une île devant un immense champignon ?",
+                Arrays.asList("L'étoile mystérieuse", "Le crabe aux pinces d'or", "Le trésor de Rackham le Rouge", "L'île mystérieuse"),
+                3);
+
+        Question question25 = new Question("Dans une aventure de Gaston Lagaffe, Fantasio commet une bourde en acceptant le nouvel animal gagné par Gaston. De quel animal s'agit-il ?",
+                Arrays.asList("Un chien", "Un vautour", "Une vache", "Un écureuil"),
+                2);
+
+        Question question26 = new Question("En quelle année Lucky Luke a-t-il été publié la première fois ?",
+                Arrays.asList("1947", "1957", "1967", "1977"),
+                0);
+
+        Question question27 = new Question("A quelle race appartient le chien Milou ?",
+                Arrays.asList("Caniche", "Coker", "Fox-terrier", "Yorkshare"),
+                2);
+
+        Question question28 = new Question("Odie et Jon sont des personnages de quelle bande dessinée?",
+                Arrays.asList("Les aristochats", "Garfield", "Mafalda", "Titeuf"),
+                1);
+
+        Question question29 = new Question("Quel compositeur allemand, devenu sourd continua d'écrire des œuvres célèbres ?",
+                Arrays.asList("Chopin", "Mozart", "Sully", "Beethoven"),
+                3);
+
+        Question question30 = new Question("De quelle nationalité était Frédéric Chopin ?",
+                Arrays.asList("Français", "Allemand", "Polonais", "Autrichien"),
+                2);
+
+        Question question31 = new Question("Qui a composé le Lac des Cygnes ?",
+                Arrays.asList("Beethoven", "Bach", "Berlioz", "Tchaïkovski"),
+                3);
+
+        Question question32 = new Question("De quel pays sont natifs les compositeurs suivants : Glück, Haydn, Strauss et Mozart ?",
+                Arrays.asList("Autriche", "Allemagne", "Roumanie", "Pologne"),
+                0);
+
+        Question question33 = new Question("Dans quel domaine Auguste Renoir s'est-il illustré?",
+                Arrays.asList("Sculpture", "Musique", "Peinture", "Littérature"),
+                2);
+
+        Question question34 = new Question("Dans quelle ville est situé le célèbre Carnegie Hall ?",
+                Arrays.asList("Washington", "New-York", "Londres", "Dublin"),
+                1);
+
+        Question question35 = new Question("Qui a peint La Dernière Cène ?",
+                Arrays.asList("Léonard de Vinci", "Michel-Ange", "Rembrandt", "Vincent Van Gogh"),
+                0);
+
+        Question question36 = new Question("En superficie, quel est le plus grand État des États-Unis d'Amérique ?",
+                Arrays.asList("Texas", "Alaska", "Nevada", "Californie"),
+                1);
+
+        Question question37 = new Question("Quel État africain a la plus petite superficie ?",
+                Arrays.asList("Congo", "Guinée", "Gambie", "Namibie"),
+                2);
+
+        Question question38 = new Question("La Perse a changé de nom. Quel est-il actuellement ?",
+                Arrays.asList("Iran", "Irak", "Pakistan", "Turquie"),
+                0);
+
+        Question question39 = new Question("A quel pays appartient l'archipel des Galápagos ?",
+                Arrays.asList("Le Guatemala", "La Colombie", "L'Uruguay", "L'Equateur"),
+                3);
+
+        Question question40 = new Question("Quel est l'océan le plus vaste du monde ?",
+                Arrays.asList("Le Pacifique", "L'Atlantique", "l'Arctique", "L'océan Indien"),
+                0);
+
         return new QuestionBank(Arrays.asList(question1,
                 question2,
                 question3,
@@ -225,6 +319,51 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 question17,
                 question18,
                 question19,
-                question20));
+                question20,
+                question21,
+                question22,
+                question23,
+                question24,
+                question25,
+                question26,
+                question27,
+                question28,
+                question29,
+                question30,
+                question31,
+                question32,
+                question33,
+                question34,
+                question35,
+                question36,
+                question37,
+                question38,
+                question39,
+                question40));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

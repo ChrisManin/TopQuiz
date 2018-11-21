@@ -32,4 +32,14 @@
         android:layout_gravity="center_horizontal"
         android:text="C'est parti !"/>
 
+    <Button
+        android:id="@+id/btHighScores"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="30dp"
+        android:layout_gravity="center_horizontal"
+        android:text="Top 5"
+        android:onClick="consultTop"/>
+
 </LinearLayout>

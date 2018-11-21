@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.tofgi.topquiz.R;
+import com.example.tofgi.topquiz.TopScores;
 import com.example.tofgi.topquiz.model.User;
 
 public class MainActivity extends AppCompatActivity {
@@ -76,8 +77,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void consultTop(View view) {
+        Intent soreList = new Intent(MainActivity.this, TopScores.class);
+        startActivity(soreList);
+    }
+
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (GAME_ACTIVITY_REQUEST_CODE == requestCode && RESULT_OK == resultCode){
             int score = data.getIntExtra(GameActivity.BUNDLE_EXTRA_SCORE, 0);
@@ -123,4 +129,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
+
+
 }
